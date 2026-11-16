@@ -1,0 +1,45 @@
+{
+  "name": "@imdz/web-components",
+  "version": "0.1.0",
+  "description": "imdz components as Web Components. They work in any framework or in plain HTML.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "OFL.txt",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://imdz.dev",
+  "scripts": {
+    "build": "node scripts/build-styles.mjs && tsc -p tsconfig.json",
+    "dev": "node scripts/build-styles.mjs && node scripts/dev.mjs",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "web-components",
+    "custom-elements",
+    "lit",
+    "components",
+    "accessible"
+  ],
+  "dependencies": {
+    "@imdz/styles": "^0.1.0",
+    "lit": "^3.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}
