@@ -1,13 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import { define } from "./define";
-import { badgeCss } from "./styles.generated";
-
-export type BadgeVariant =
-  | "neutral"
-  | "primary"
-  | "success"
-  | "warning"
-  | "danger";
+import { define } from "./define.js";
+import { badgeCss } from "./styles.generated.js";
 
 export class ImdzBadge extends LitElement {
   static properties = {
@@ -23,8 +16,6 @@ export class ImdzBadge extends LitElement {
     `,
   ];
 
-  declare variant: BadgeVariant;
-
   constructor() {
     super();
     this.variant = "neutral";
@@ -39,8 +30,3 @@ export class ImdzBadge extends LitElement {
 
 define("imdz-badge", ImdzBadge);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-badge": ImdzBadge;
-  }
-}

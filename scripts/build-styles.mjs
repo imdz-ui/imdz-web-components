@@ -1,10 +1,10 @@
-// Generates src/styles.generated.ts from the CSS of @imdz/styles (tokens.css
+// Generates src/styles.generated.js from the CSS of @imdz/styles (tokens.css
 // and one CSS Module per component, shared with @imdz/react), so the Web
 // Components use the same styles in their shadow DOM. Inside the shadow DOM a
 // .module.css file's classes stay as they are: .button, .secondary…
 //
-// It also generates src/fonts.generated.ts with the @font-face rules of
-// @imdz/styles and copies the .woff2 files to dist/fonts: the rules point to
+// It also generates src/fonts.generated.js with the @font-face rules of
+// @imdz/styles and copies the .woff2 files to src/fonts: the rules point to
 // them with new URL(…, import.meta.url), which bundlers and CDNs resolve.
 import { copyFileSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -38,7 +38,7 @@ const lines = files.map((file) => {
   // Css suffix: some file names (switch) are reserved words.
   return `export const ${name}Css = ${JSON.stringify(read(join(cssDir, file)))};`;
 });
-writeIfChanged(join(root, "src", "styles.generated.ts"), `${header}${lines.join("\n")}\n`);
+writeIfChanged(join(root, "src", "styles.generated.js"), `${header}${lines.join("\n")}\n`);
 
 /* Fonts: the rules, with each file as new URL("./fonts/x.woff2", import.meta.url). */
 const fontRules = read(join(cssDir, "fonts.css"))
@@ -49,15 +49,15 @@ const fontsExpression = JSON.stringify(fontRules).replace(
   (_, file) => `url(" + new URL("./fonts/${file}", import.meta.url).href + ")`,
 );
 writeIfChanged(
-  join(root, "src", "fonts.generated.ts"),
+  join(root, "src", "fonts.generated.js"),
   `${header}export const fontsCss = ${fontsExpression};\n`,
 );
 
 const fontFiles = join(stylesRoot, "fonts");
-mkdirSync(join(root, "dist", "fonts"), { recursive: true });
+mkdirSync(join(root, "src", "fonts"), { recursive: true });
 for (const file of readdirSync(fontFiles)) {
-  copyFileSync(join(fontFiles, file), join(root, "dist", "fonts", file));
+  copyFileSync(join(fontFiles, file), join(root, "src", "fonts", file));
 }
 copyFileSync(join(stylesRoot, "OFL.txt"), join(root, "OFL.txt"));
 
-console.log(`styles.generated.ts: ${files.length} stylesheets, fonts.generated.ts`);
+console.log(`styles.generated.js: ${files.length} stylesheets, fonts.generated.js`);

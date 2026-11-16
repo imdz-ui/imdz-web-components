@@ -1,6 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import { define } from "./define";
-import { avatarCss } from "./styles.generated";
+import { define } from "./define.js";
+import { avatarCss } from "./styles.generated.js";
 
 export class ImdzAvatar extends LitElement {
   static properties = {
@@ -19,9 +19,6 @@ export class ImdzAvatar extends LitElement {
   ];
 
   /** The person's name: gives the initials and the alt text. */
-  declare name: string;
-  declare src: string | undefined;
-  declare size: "md" | "lg";
 
   constructor() {
     super();
@@ -29,7 +26,7 @@ export class ImdzAvatar extends LitElement {
     this.size = "md";
   }
 
-  private get initials() {
+  get initials() {
     return this.name
       .split(/\s+/)
       .filter(Boolean)
@@ -55,8 +52,3 @@ export class ImdzAvatar extends LitElement {
 
 define("imdz-avatar", ImdzAvatar);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-avatar": ImdzAvatar;
-  }
-}

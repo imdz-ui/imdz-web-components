@@ -1,21 +1,17 @@
 {
   "name": "@imdz/web-components",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "imdz components as Web Components. They work in any framework or in plain HTML.",
   "license": "MIT",
   "type": "module",
   "sideEffects": true,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.js",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
+    ".": "./src/index.js",
     "./package.json": "./package.json"
   },
   "files": [
-    "dist",
+    "src",
     "OFL.txt",
     "LICENSE"
   ],
@@ -24,7 +20,7 @@
   },
   "homepage": "https://imdz.dev",
   "scripts": {
-    "build": "node scripts/build-styles.mjs && tsc -p tsconfig.json",
+    "build": "node scripts/build-styles.mjs",
     "dev": "node scripts/build-styles.mjs && node scripts/dev.mjs",
     "prepack": "npm run build"
   },
@@ -38,8 +34,5 @@
   "dependencies": {
     "@imdz/styles": "^0.1.0",
     "lit": "^3.3.0"
-  },
-  "devDependencies": {
-    "typescript": "^5"
   }
 }

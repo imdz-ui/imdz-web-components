@@ -21,4 +21,5 @@ both take it from `@imdz/styles`.
 ## Development
 
 `npm run dev` regenerates the styles when the CSS of `@imdz/styles` changes
-(link it with `npm link @imdz/styles`) and recompiles `dist/` on every change.
+(link it with `npm link @imdz/styles`). The components in `src/` are plain
+JavaScript with Lit: there's no compile step, `src/` is what gets published.

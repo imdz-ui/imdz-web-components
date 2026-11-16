@@ -1,6 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import { define } from "./define";
-import { spinnerCss } from "./styles.generated";
+import { define } from "./define.js";
+import { spinnerCss } from "./styles.generated.js";
 
 export class ImdzSpinner extends LitElement {
   static properties = {
@@ -18,8 +18,6 @@ export class ImdzSpinner extends LitElement {
   ];
 
   /** Text for screen readers. */
-  declare label: string;
-  declare size: "md" | "lg";
 
   constructor() {
     super();
@@ -39,8 +37,3 @@ export class ImdzSpinner extends LitElement {
 
 define("imdz-spinner", ImdzSpinner);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-spinner": ImdzSpinner;
-  }
-}

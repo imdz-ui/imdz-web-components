@@ -1,4 +1,3 @@
 node_modules/
-dist/
-*.tsbuildinfo
+src/fonts/
 .DS_Store

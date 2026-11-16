@@ -1,7 +1,7 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { define } from "./define";
-import { ImdzFormField } from "./form-field";
+import { define } from "./define.js";
+import { ImdzFormField } from "./form-field.js";
 
 export class ImdzInput extends ImdzFormField {
   static properties = {
@@ -9,15 +9,12 @@ export class ImdzInput extends ImdzFormField {
     placeholder: { type: String },
   };
 
-  declare type: string;
-  declare placeholder: string | undefined;
-
   constructor() {
     super();
     this.type = "text";
   }
 
-  protected renderControl(describedBy?: string) {
+  renderControl(describedBy) {
     return html`
       <input
         id="input"
@@ -38,8 +35,3 @@ export class ImdzInput extends ImdzFormField {
 
 define("imdz-input", ImdzInput);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-input": ImdzInput;
-  }
-}

@@ -1,7 +1,7 @@
 import { LitElement, css, html, nothing, unsafeCSS } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { define } from "./define";
-import { progressCss } from "./styles.generated";
+import { define } from "./define.js";
+import { progressCss } from "./styles.generated.js";
 
 export class ImdzProgress extends LitElement {
   static properties = {
@@ -18,10 +18,6 @@ export class ImdzProgress extends LitElement {
       }
     `,
   ];
-
-  declare value: number;
-  declare max: number;
-  declare label: string;
 
   constructor() {
     super();
@@ -62,8 +58,3 @@ export class ImdzProgress extends LitElement {
 
 define("imdz-progress", ImdzProgress);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-progress": ImdzProgress;
-  }
-}

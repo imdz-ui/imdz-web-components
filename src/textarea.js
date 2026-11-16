@@ -1,8 +1,8 @@
 import { html, unsafeCSS } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { define } from "./define";
-import { ImdzFormField } from "./form-field";
-import { textareaCss } from "./styles.generated";
+import { define } from "./define.js";
+import { ImdzFormField } from "./form-field.js";
+import { textareaCss } from "./styles.generated.js";
 
 export class ImdzTextarea extends ImdzFormField {
   static properties = {
@@ -12,15 +12,12 @@ export class ImdzTextarea extends ImdzFormField {
 
   static styles = [ImdzFormField.styles, unsafeCSS(textareaCss)];
 
-  declare placeholder: string | undefined;
-  declare rows: number;
-
   constructor() {
     super();
     this.rows = 4;
   }
 
-  protected renderControl(describedBy?: string) {
+  renderControl(describedBy) {
     return html`
       <textarea
         id="input"
@@ -41,8 +38,3 @@ export class ImdzTextarea extends ImdzFormField {
 
 define("imdz-textarea", ImdzTextarea);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-textarea": ImdzTextarea;
-  }
-}

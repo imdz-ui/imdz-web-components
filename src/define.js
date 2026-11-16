@@ -1,7 +1,7 @@
-import { fontsCss } from "./fonts.generated";
-import { tokensCss } from "./styles.generated";
+import { fontsCss } from "./fonts.generated.js";
+import { tokensCss } from "./styles.generated.js";
 
-export function define(name: string, element: CustomElementConstructor) {
+export function define(name, element) {
   if (!customElements.get(name)) customElements.define(name, element);
 }
 

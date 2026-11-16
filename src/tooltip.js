@@ -1,6 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import { define } from "./define";
-import { tooltipCss } from "./styles.generated";
+import { define } from "./define.js";
+import { tooltipCss } from "./styles.generated.js";
 
 /** Wraps an element and shows a short text on hover or focus. */
 export class ImdzTooltip extends LitElement {
@@ -16,8 +16,6 @@ export class ImdzTooltip extends LitElement {
       }
     `,
   ];
-
-  declare text: string;
 
   constructor() {
     super();
@@ -36,8 +34,3 @@ export class ImdzTooltip extends LitElement {
 
 define("imdz-tooltip", ImdzTooltip);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-tooltip": ImdzTooltip;
-  }
-}

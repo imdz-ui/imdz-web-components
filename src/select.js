@@ -1,10 +1,8 @@
 import { html, unsafeCSS } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { define } from "./define";
-import { ImdzFormField } from "./form-field";
-import { selectCss } from "./styles.generated";
-
-type SelectOption = { value: string; label: string; disabled: boolean };
+import { define } from "./define.js";
+import { ImdzFormField } from "./form-field.js";
+import { selectCss } from "./styles.generated.js";
 
 /**
  * Options are written as <option> children of the element. A <select> inside
@@ -20,9 +18,7 @@ export class ImdzSelect extends ImdzFormField {
     unsafeCSS(selectCss),
   ];
 
-  declare options: SelectOption[];
-
-  private observer = new MutationObserver(() => this.readOptions());
+  observer = new MutationObserver(() => this.readOptions());
 
   constructor() {
     super();
@@ -44,7 +40,7 @@ export class ImdzSelect extends ImdzFormField {
     this.observer.disconnect();
   }
 
-  private readOptions() {
+  readOptions() {
     const elements = Array.from(this.querySelectorAll("option"));
     this.options = elements.map((option) => ({
       value: option.value,
@@ -60,7 +56,7 @@ export class ImdzSelect extends ImdzFormField {
     }
   }
 
-  protected renderControl(describedBy?: string) {
+  renderControl(describedBy) {
     return html`
       <select
         id="input"
@@ -90,8 +86,3 @@ export class ImdzSelect extends ImdzFormField {
 
 define("imdz-select", ImdzSelect);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-select": ImdzSelect;
-  }
-}

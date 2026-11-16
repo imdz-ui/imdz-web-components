@@ -1,6 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import { define } from "./define";
-import { skeletonCss } from "./styles.generated";
+import { define } from "./define.js";
+import { skeletonCss } from "./styles.generated.js";
 
 /** Loading placeholder. Size it with width and height on the element. */
 export class ImdzSkeleton extends LitElement {
@@ -24,8 +24,3 @@ export class ImdzSkeleton extends LitElement {
 
 define("imdz-skeleton", ImdzSkeleton);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-skeleton": ImdzSkeleton;
-  }
-}

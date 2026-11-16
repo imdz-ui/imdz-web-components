@@ -1,8 +1,7 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import type { CSSResultGroup, PropertyValues } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { define } from "./define";
-import { checkboxCss } from "./styles.generated";
+import { define } from "./define.js";
+import { checkboxCss } from "./styles.generated.js";
 
 /**
  * Checkbox that takes part in forms. The label goes as content.
@@ -20,7 +19,7 @@ export class ImdzCheckbox extends LitElement {
     disabled: { type: Boolean, reflect: true },
   };
 
-  static styles: CSSResultGroup = [
+  static styles = [
     unsafeCSS(checkboxCss),
     css`
       :host {
@@ -29,13 +28,7 @@ export class ImdzCheckbox extends LitElement {
     `,
   ];
 
-  declare name: string;
-  declare value: string;
-  declare checked: boolean;
-  declare required: boolean;
-  declare disabled: boolean;
-
-  private internals = this.attachInternals();
+  internals = this.attachInternals();
 
   constructor() {
     super();
@@ -47,23 +40,23 @@ export class ImdzCheckbox extends LitElement {
   }
 
   /** CSS block the element uses. */
-  protected get block() {
+  get block() {
     return "checkbox";
   }
 
   /** ARIA role of the input, if it isn't a checkbox's. */
-  protected get inputRole(): string | undefined {
+  get inputRole() {
     return undefined;
   }
 
-  protected updated(changed: PropertyValues<this>) {
+  updated(changed) {
     if (changed.has("checked") || changed.has("value")) {
       this.internals.setFormValue(this.checked ? this.value : null);
     }
   }
 
-  private handleChange(event: Event) {
-    this.checked = (event.target as HTMLInputElement).checked;
+  handleChange(event) {
+    this.checked = event.target.checked;
     this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
@@ -87,8 +80,3 @@ export class ImdzCheckbox extends LitElement {
 
 define("imdz-checkbox", ImdzCheckbox);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-checkbox": ImdzCheckbox;
-  }
-}

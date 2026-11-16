@@ -1,7 +1,7 @@
 import { css, unsafeCSS } from "lit";
-import { ImdzCheckbox } from "./checkbox";
-import { define } from "./define";
-import { switchCss } from "./styles.generated";
+import { ImdzCheckbox } from "./checkbox.js";
+import { define } from "./define.js";
+import { switchCss } from "./styles.generated.js";
 
 /** Switch: a checkbox with a different look and the "switch" role. */
 export class ImdzSwitch extends ImdzCheckbox {
@@ -14,19 +14,14 @@ export class ImdzSwitch extends ImdzCheckbox {
     `,
   ];
 
-  protected get block() {
+  get block() {
     return "switch";
   }
 
-  protected get inputRole() {
+  get inputRole() {
     return "switch";
   }
 }
 
 define("imdz-switch", ImdzSwitch);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-switch": ImdzSwitch;
-  }
-}

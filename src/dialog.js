@@ -1,7 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import type { PropertyValues } from "lit";
-import { define } from "./define";
-import { dialogCss } from "./styles.generated";
+import { define } from "./define.js";
+import { dialogCss } from "./styles.generated.js";
 
 /**
  * Modal dialog built on the native <dialog>.
@@ -36,11 +35,6 @@ export class ImdzDialog extends LitElement {
     `,
   ];
 
-  declare open: boolean;
-  declare heading: string;
-  declare closeLabel: string;
-  declare hasFooter: boolean;
-
   constructor() {
     super();
     this.open = false;
@@ -57,7 +51,7 @@ export class ImdzDialog extends LitElement {
     this.open = false;
   }
 
-  protected updated(changed: PropertyValues<this>) {
+  updated(changed) {
     if (!changed.has("open")) return;
     const element = this.renderRoot.querySelector("dialog");
     if (!element) return;
@@ -65,13 +59,13 @@ export class ImdzDialog extends LitElement {
     if (!this.open && element.open) element.close();
   }
 
-  private handleClose() {
+  handleClose() {
     this.open = false;
     this.dispatchEvent(new Event("close"));
   }
 
-  private handleFooterChange(event: Event) {
-    const slot = event.target as HTMLSlotElement;
+  handleFooterChange(event) {
+    const slot = event.target;
     this.hasFooter = slot.assignedElements().length > 0;
   }
 
@@ -104,8 +98,3 @@ export class ImdzDialog extends LitElement {
 
 define("imdz-dialog", ImdzDialog);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-dialog": ImdzDialog;
-  }
-}

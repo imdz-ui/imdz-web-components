@@ -1,7 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import type { PropertyValues } from "lit";
-import { define } from "./define";
-import { tabsCss } from "./styles.generated";
+import { define } from "./define.js";
+import { tabsCss } from "./styles.generated.js";
 
 /** Panel of <imdz-tabs>. Its label attribute is the tab's text. */
 export class ImdzTab extends LitElement {
@@ -19,9 +18,6 @@ export class ImdzTab extends LitElement {
     }
   `;
 
-  declare label: string;
-  declare active: boolean;
-
   constructor() {
     super();
     this.label = "";
@@ -33,7 +29,7 @@ export class ImdzTab extends LitElement {
     this.setAttribute("role", "tabpanel");
   }
 
-  protected updated(changed: PropertyValues<this>) {
+  updated(changed) {
     if (changed.has("label")) this.setAttribute("aria-label", this.label);
   }
 
@@ -60,20 +56,17 @@ export class ImdzTabs extends LitElement {
     `,
   ];
 
-  declare selected: number;
-  declare labels: string[];
-
   constructor() {
     super();
     this.selected = 0;
     this.labels = [];
   }
 
-  private get panels() {
-    return Array.from(this.querySelectorAll<ImdzTab>(":scope > imdz-tab"));
+  get panels() {
+    return Array.from(this.querySelectorAll(":scope > imdz-tab"));
   }
 
-  private syncPanels() {
+  syncPanels() {
     const panels = this.panels;
     this.labels = panels.map((panel) => panel.label);
     panels.forEach((panel, index) => {
@@ -81,17 +74,17 @@ export class ImdzTabs extends LitElement {
     });
   }
 
-  protected willUpdate(changed: PropertyValues<this>) {
+  willUpdate(changed) {
     if (changed.has("selected")) this.syncPanels();
   }
 
-  private select(index: number) {
+  select(index) {
     if (index === this.selected) return;
     this.selected = index;
     this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
-  private async handleKeydown(event: KeyboardEvent) {
+  async handleKeydown(event) {
     const last = this.labels.length - 1;
     const next = {
       ArrowRight: this.selected === last ? 0 : this.selected + 1,
@@ -105,7 +98,7 @@ export class ImdzTabs extends LitElement {
     this.select(next);
     await this.updateComplete;
     this.renderRoot
-      .querySelector<HTMLElement>('[aria-selected="true"]')
+      .querySelector('[aria-selected="true"]')
       ?.focus();
   }
 
@@ -143,9 +136,3 @@ export class ImdzTabs extends LitElement {
 define("imdz-tab", ImdzTab);
 define("imdz-tabs", ImdzTabs);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-tab": ImdzTab;
-    "imdz-tabs": ImdzTabs;
-  }
-}

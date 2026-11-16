@@ -1,6 +1,6 @@
 import { LitElement, css, html, nothing, unsafeCSS } from "lit";
-import { define } from "./define";
-import { cardCss } from "./styles.generated";
+import { define } from "./define.js";
+import { cardCss } from "./styles.generated.js";
 
 export class ImdzCard extends LitElement {
   static properties = {
@@ -31,17 +31,14 @@ export class ImdzCard extends LitElement {
     `,
   ];
 
-  declare heading: string;
-  declare hasFooter: boolean;
-
   constructor() {
     super();
     this.heading = "";
     this.hasFooter = false;
   }
 
-  private handleFooterChange(event: Event) {
-    const slot = event.target as HTMLSlotElement;
+  handleFooterChange(event) {
+    const slot = event.target;
     this.hasFooter = slot.assignedElements().length > 0;
   }
 
@@ -62,8 +59,3 @@ export class ImdzCard extends LitElement {
 
 define("imdz-card", ImdzCard);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-card": ImdzCard;
-  }
-}

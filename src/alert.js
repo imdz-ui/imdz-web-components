@@ -1,8 +1,6 @@
 import { LitElement, css, html, nothing, unsafeCSS } from "lit";
-import { define } from "./define";
-import { alertCss } from "./styles.generated";
-
-export type AlertVariant = "info" | "success" | "warning" | "danger";
+import { define } from "./define.js";
+import { alertCss } from "./styles.generated.js";
 
 export class ImdzAlert extends LitElement {
   static properties = {
@@ -18,9 +16,6 @@ export class ImdzAlert extends LitElement {
       }
     `,
   ];
-
-  declare variant: AlertVariant;
-  declare heading: string;
 
   constructor() {
     super();
@@ -47,8 +42,3 @@ export class ImdzAlert extends LitElement {
 
 define("imdz-alert", ImdzAlert);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-alert": ImdzAlert;
-  }
-}

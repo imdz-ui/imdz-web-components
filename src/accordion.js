@@ -1,6 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import { define } from "./define";
-import { accordionCss } from "./styles.generated";
+import { define } from "./define.js";
+import { accordionCss } from "./styles.generated.js";
 
 const hostStyles = css`
   :host {
@@ -21,9 +21,6 @@ export class ImdzAccordionItem extends LitElement {
 
   static styles = [unsafeCSS(accordionCss), hostStyles];
 
-  declare heading: string;
-  declare open: boolean;
-
   constructor() {
     super();
     this.heading = "";
@@ -35,7 +32,7 @@ export class ImdzAccordionItem extends LitElement {
    * keyboard), the group can close the others in the same frame. Waiting for
    * the toggle event would paint both open for a moment.
    */
-  private handleSummaryClick() {
+  handleSummaryClick() {
     if (this.open) return;
     this.dispatchEvent(new Event("imdz-accordion-opening", { bubbles: true }));
   }
@@ -47,8 +44,8 @@ export class ImdzAccordionItem extends LitElement {
     this.open = false;
   }
 
-  private handleToggle(event: Event) {
-    const open = (event.target as HTMLDetailsElement).open;
+  handleToggle(event) {
+    const open = event.target.open;
     if (open === this.open) return;
     this.open = open;
     this.dispatchEvent(new Event("toggle", { bubbles: true }));
@@ -80,11 +77,9 @@ export class ImdzAccordion extends LitElement {
 
   static styles = [unsafeCSS(accordionCss), hostStyles];
 
-  declare name: string | undefined;
-
   constructor() {
     super();
-    const closeOthers = (event: Event) => {
+    const closeOthers = (event) => {
       const opening = event.target;
       if (!this.name || !(opening instanceof ImdzAccordionItem)) return;
       for (const item of this.querySelectorAll("imdz-accordion-item")) {
@@ -95,7 +90,7 @@ export class ImdzAccordion extends LitElement {
     // from code (item.open = true).
     this.addEventListener("imdz-accordion-opening", closeOthers);
     this.addEventListener("toggle", (event) => {
-      if ((event.target as ImdzAccordionItem).open) closeOthers(event);
+      if (event.target.open) closeOthers(event);
     });
   }
 
@@ -107,9 +102,3 @@ export class ImdzAccordion extends LitElement {
 define("imdz-accordion-item", ImdzAccordionItem);
 define("imdz-accordion", ImdzAccordion);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-accordion-item": ImdzAccordionItem;
-    "imdz-accordion": ImdzAccordion;
-  }
-}

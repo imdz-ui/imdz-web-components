@@ -1,9 +1,6 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import { define } from "./define";
-import { buttonCss } from "./styles.generated";
-
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
-export type ButtonSize = "sm" | "md" | "lg";
+import { define } from "./define.js";
+import { buttonCss } from "./styles.generated.js";
 
 export class ImdzButton extends LitElement {
   static properties = {
@@ -26,12 +23,6 @@ export class ImdzButton extends LitElement {
     `,
   ];
 
-  declare variant: ButtonVariant;
-  declare size: ButtonSize;
-  declare type: "button" | "submit" | "reset";
-  declare href: string | undefined;
-  declare disabled: boolean;
-
   constructor() {
     super();
     this.variant = "primary";
@@ -40,7 +31,7 @@ export class ImdzButton extends LitElement {
     this.disabled = false;
   }
 
-  private get classes() {
+  get classes() {
     return [
       "button",
       this.variant !== "primary" && `${this.variant}`,
@@ -51,7 +42,7 @@ export class ImdzButton extends LitElement {
   }
 
   // A button inside the shadow DOM doesn't submit or reset the form that contains it.
-  private handleClick() {
+  handleClick() {
     const form = this.closest("form");
     if (!form) return;
     if (this.type === "submit") form.requestSubmit();
@@ -78,8 +69,3 @@ export class ImdzButton extends LitElement {
 
 define("imdz-button", ImdzButton);
 
-declare global {
-  interface HTMLElementTagNameMap {
-    "imdz-button": ImdzButton;
-  }
-}
